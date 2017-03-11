@@ -1,0 +1,33 @@
+oc_platform_home:
+    path: /{page}
+    defaults:
+        _controller: OCPlatformBundle:Advert:index
+        page: 1
+    requirements:
+        page: \d*
+
+oc_platform_view:
+    path: /advert/{idAdvert}
+    defaults:
+        _controller: OCPlatformBundle:Advert:view
+    requirements:
+        idAdvert: \d+
+
+oc_platform_add:
+    path: /add
+    defaults:
+        _controller: OCPlatformBundle:Advert:add
+
+oc_platform_edit:
+    path: /edit/{idAdvert}
+    defaults:
+        _controller: OCPlatformBundle:Advert:edit
+    requirements:
+        idAdvert: \d+
+
+oc_platform_delete:
+    path: /delete/{idAdvert}
+    defaults:
+        _controller: OCPlatformBundle:Advert:delete
+    requirements:
+      idAdvert: \d+
