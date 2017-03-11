@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Detail de l'annonce {{ idAdvert }}</title>
+</head>
+<body>
+    <h1>Affichage de l'annonce n°{{ idAdvert }}</h1>
+
+    <div>
+        {% for message in app.session.flashbag.get('info_ajout') %}
+            <p>Message flash : {{ message }}</p>
+        {% endfor %}
+    </div>
+    <p>Vous voulez postuler pour le poste</p>
+
+
+</body>
+</html>
