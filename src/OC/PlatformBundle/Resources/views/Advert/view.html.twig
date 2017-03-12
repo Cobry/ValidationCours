@@ -1,20 +1,29 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Detail de l'annonce {{ idAdvert }}</title>
-</head>
-<body>
-    <h1>Affichage de l'annonce n°{{ idAdvert }}</h1>
+{% extends "OCPlatformBundle::layout.html.twig" %}
 
-    <div>
-        {% for message in app.session.flashbag.get('info_ajout') %}
-            <p>Message flash : {{ message }}</p>
-        {% endfor %}
+{% block title %}
+    Detail de l'annonce - {{ parent() }}
+{% endblock %}
+
+{% block ocplatform_body %}
+
+    <h2>Affichage de l'annonce n°{{ advert.idAdvert }} pour le poste {{ advert.title }}</h2>
+    <i>Ajouté par {{ advert.author }} le {{ advert.date|date('Y/m/d H:i:s') }}</i>
+
+    <div class="well">
+        {{ advert.content }}
     </div>
 
-    <p>Vous voulez postuler pour le poste</p>
-
-
-</body>
-</html>
+    <p>
+        <a href="{{ path('oc_platform_home') }}" class="btn btn-default">
+            <i class="glyphicon glyphicon-chevron-left"></i>
+            Retour à la liste
+        </a>
+        <a href="{{ path('oc_platform_edit', {'idAdvert': advert.idAdvert}) }}" class="btn btn-default">
+            <i class="glyphicon glyphicon-edit"></i>
+            Modifier l'annonce
+        </a>
+        <a href="{{ path('oc_platform_delete', {'idAdvert': advert.idAdvert}) }}" class="btn btn-danger">
+            Supprimer l'annonce
+        </a>
+    </p>
+{% endblock %}

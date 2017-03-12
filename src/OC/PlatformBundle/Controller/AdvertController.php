@@ -11,22 +11,76 @@ use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 
 class AdvertController extends Controller
 {
+    /**
+     * @param $page
+     * @return Response
+     */
     public function indexAction($page)
     {
         if ($page<1){
             throw new NotFoundHttpException('Page n°'.$page.' inexistante');
         }
-        return $this->render('OCPlatformBundle:Advert:index.html.twig', array('listAdverts' => array()));
+
+        //La liste d'annonce en dur
+        $listAdverts = array(
+            array(
+                'title' => 'Développeur en symfony',
+                'idAdvert' => '2',
+                'author' => 'Obyr Clément',
+                'content' => 'Nous recherchons un développeur symfony chez Entreprise',
+                'date' => new \DateTime()
+            ),
+            array(
+                'title' => 'Webmaster',
+                'idAdvert' => '5',
+                'author' => 'Jean dupont',
+                'content' => 'Loremp azioepiazeazi pdz azjdizadjazid azdnaziodnjazidazd',
+                'date' => new \DateTime()
+            ),
+            array(
+                'title' => 'Webdesigner',
+                'idAdvert' => '9',
+                'author' => 'Delire me',
+                'content' => 'Oidzo djzd ioere dzdpo smsoz aoidziu dzaduh',
+                'date' => new \DateTime()
+            )
+        );
+
+        return $this->render('OCPlatformBundle:Advert:index.html.twig', array('listAdverts' => $listAdverts));
     }
 
+    /**
+     * @param $idAdvert
+     * @return Response
+     */
     public function viewAction($idAdvert)
     {
-        return $this->render('OCPlatformBundle:Advert:view.html.twig', array('idAdvert' => $idAdvert));
+        $advert = array(
+            'title' => 'Webdesigner',
+            'idAdvert' => $idAdvert,
+            'author' => 'Delire me',
+            'content' => 'Oidzo djzd ioere dzdpo smsoz aoidziu dzaduh',
+            'date' => new \DateTime()
+        );
+        return $this->render('OCPlatformBundle:Advert:view.html.twig', array('advert' => $advert));
     }
 
+    /**
+     * @param Request $request
+     * @return \Symfony\Component\HttpFoundation\RedirectResponse|Response
+     */
     public function addAction(Request $request)
     {
         if($request->isMethod('POST')){
+
+            $antispam = $this->container->get('oc_platform.antispam');
+
+            $text = '...';
+
+            if($antispam->isSpam($text)){
+                throw new \Exception('Votre message est un spam');
+            }
+
             //Traitement BDD
             $request->getSession()->getFlashBag()->add('info_ajout', 'Annonce bien enregistrée');
 
@@ -37,11 +91,20 @@ class AdvertController extends Controller
 
     }
 
+    /**
+     * @param $idAdvert
+     * @return Response
+     */
     public function deleteAction($idAdvert)
     {
         return $this->render('OCPlatformBundle:Advert:delete.html.twig');
     }
 
+    /**
+     * @param $idAdvert
+     * @param Request $request
+     * @return \Symfony\Component\HttpFoundation\RedirectResponse|Response
+     */
     public function editAction($idAdvert, Request $request)
     {
         if($request->isMethod('POST')){
@@ -51,9 +114,21 @@ class AdvertController extends Controller
             return $this->redirectToRoute('oc_platform_view',array('idAdvert' => 8));
         }
 
-        return $this->render('OCPlatformBundle:Advert:edit.html.twig');
+        $advert = array(
+            'title' => 'Webdesigner',
+            'idAdvert' => $idAdvert,
+            'author' => 'Delire me',
+            'content' => 'Oidzo djzd ioere dzdpo smsoz aoidziu dzaduh',
+            'date' => new \DateTime()
+        );
+
+        return $this->render('OCPlatformBundle:Advert:edit.html.twig', array('advert' => $advert));
     }
 
+    /**
+     * @param $limit
+     * @return Response
+     */
     public function menuAction($limit)
     {
         $listAdverts= array(

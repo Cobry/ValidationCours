@@ -1,12 +1,16 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Modification d'une annonce</title>
-</head>
-<body>
+{% extends "OCPlatformBundle::layout.html.twig" %}
+
+{% block title %}Modification d'une annonce - {{ parent() }}{% endblock %}
+
+{% block ocplatform_body %}
+
+    <h2>Modification de l'annonce pour le poste {{ advert.title }}</h2>
+    {{ include("OCPlatformBundle:Advert:form.html.twig") }}
+
     <p>
-        Formulaire de modification d'annonce
+        <a href="{{ path('oc_platform_view', {'idAdvert': advert.idAdvert}) }}" class="btn btn-default">
+            <i class="glyphicon glyphicon-chevron-left"></i>
+            Retour à l'annonce
+        </a>
     </p>
-</body>
-</html>
+{% endblock %}

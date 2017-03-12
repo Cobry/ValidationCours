@@ -9,6 +9,7 @@
         {% for annonce in listAdverts %}
             <li>
                 <a href="{{ path('oc_platform_view', {'idAdvert': annonce.idAdvert}) }}">{{ annonce.title }}</a>
+                par {{ annonce.author }}, le {{ annonce.date|date('Y/m/d') }}
             </li>
         {% else %}
             <li>Pas encore d'annonce</li>
