@@ -14,9 +14,9 @@ class AdvertController extends Controller
     public function indexAction($page)
     {
         if ($page<1){
-            throw new NotFoundHttpException('Page'.$page.' inexistante');
+            throw new NotFoundHttpException('Page n°'.$page.' inexistante');
         }
-        return $this->render('OCPlatformBundle:Advert:index.html.twig');
+        return $this->render('OCPlatformBundle:Advert:index.html.twig', array('listAdverts' => array()));
     }
 
     public function viewAction($idAdvert)
@@ -37,12 +37,12 @@ class AdvertController extends Controller
 
     }
 
-    public function deleteAction($id)
+    public function deleteAction($idAdvert)
     {
         return $this->render('OCPlatformBundle:Advert:delete.html.twig');
     }
 
-    public function editAction($id, Request $request)
+    public function editAction($idAdvert, Request $request)
     {
         if($request->isMethod('POST')){
             //traitement BDD
@@ -52,5 +52,16 @@ class AdvertController extends Controller
         }
 
         return $this->render('OCPlatformBundle:Advert:edit.html.twig');
+    }
+
+    public function menuAction($limit)
+    {
+        $listAdverts= array(
+            array('idAdvert' => 2, 'title' => 'Développeur symfony'),
+            array('idAdvert' => 5, 'title' => 'Webmaster'),
+            array('idAdvert' => 9, 'title' => 'Websigner')
+        );
+
+        return $this->render('OCPlatformBundle:Advert:menu.html.twig', array('listAdverts'=>$listAdverts));
     }
 }
