@@ -1,10 +1,10 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Suppression de l'annonce {{id}}</title>
-</head>
-<body>
+{% extends "OCPlatformBundle::layout.html.twig" %}
 
-</body>
-</html>
+{% block title %}Suppression - {{ parent() }}{% endblock %}
+
+{% block ocplatform_body %}
+
+    <div class="alert alert-info">
+        Suppression des categories {{ advert.id }}
+    </div>
+{% endblock %}
